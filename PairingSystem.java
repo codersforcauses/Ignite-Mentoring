@@ -56,7 +56,7 @@ public class PairingSystem {
 	 */
 	public static String pairingSystem(String file_path) throws InvalidAlgorithmParameterException, IOException{
 
-		log = "File Path: " + file_path + "\n\n";
+		log = "File Path: " + file_path + "\r\n\r\n";
 		try {
 
 			workbook  = Read_file (file_path);
@@ -70,6 +70,12 @@ public class PairingSystem {
 			int [] skill_demand  = get_demand(classrooms,number_skills);
 			int [] skill_supply  = get_supply(volunteers,number_skills);
 
+			System.out.println(" ================================= \t\t\t\t\t\t =================================");
+
+			System.out.println(" "+Arrays.toString(skill_demand));
+
+			System.out.println(" ================================= \t\t\t\t\t\t =================================");
+			
 			while(pair_once(asked,classrooms,volunteers,number_skills,end));
 
 			log += log_sets();
@@ -94,23 +100,23 @@ public class PairingSystem {
 		int [] skill_supply = get_supply(volunteers,number_skills);
 
 		String out = "\nDemand: \t";
-		out += (" "+Arrays.toString (skill_demand))+"\nSupply: \t";
-		out += (" "+Arrays.toString (skill_supply)) +"\n\nClasses";
+		out += (" "+Arrays.toString (skill_demand))+"\r\nSupply: \t";
+		out += (" "+Arrays.toString (skill_supply)) +"\r\n\r\nClasses";
 
 		for (int i = 0; i < classrooms.length; i++) {
-			out+=("\n\nClass ID "+String.format("%2d ",i+1)+" maxsize "+String.format("%-3d\n\n",classrooms[i].getMax_size()));
-			out+=(classrooms[i].get_summery()+"\n");
+			out+=("\r\n\r\nClass ID "+String.format("%2d ",i+1)+" maxsize "+String.format("%-3d\r\n\r\n",classrooms[i].getMax_size()));
+			out+=(classrooms[i].get_summery()+"\r\n");
 
 
 			for (int j = 0; j < classrooms[i].getCurrent_size()-1; j++) {
-				out+=(String.format("volunteersID %3d",classrooms[i].getVolunteers(j)+1)+" "+volunteers[classrooms[i].getVolunteers(j)].toStringOneIndexed()+"\n");
+				out+=(String.format("volunteersID %3d",classrooms[i].getVolunteers(j)+1)+" "+volunteers[classrooms[i].getVolunteers(j)].toStringOneIndexed()+"\r\n");
 			}
 		}
-		out+="\n\nVolunteers\n";
+		out+="\r\n\r\nVolunteers\r\n";
 		for (int j = 0; j < volunteers.length; j++) {
-			out+=(String.format("volunteersID %3d",j+1)+" "+volunteers[j].toStringOneIndexed()+"\n");
+			out+=(String.format("volunteersID %3d",j+1)+" "+volunteers[j].toStringOneIndexed()+"\r\n");
 		}
-		out += "\n";
+		out += "\r\n";
 		return out;
 	}
 	private static String description(int [] starting_skill_demand , int[] starting_skill_supply) {
@@ -125,13 +131,13 @@ public class PairingSystem {
 			}
 		}
 
-		String out = "Supply:\n\n";
+		String out = "Supply:\r\n\r\n";
 		for (int i = 0; i < starting_skill_supply.length; i++) {
-			out = out +"  "+skills[i]+"\t: "+starting_skill_supply[i]+"\n";
+			out = out +"  "+skills[i]+"\t: "+starting_skill_supply[i]+"\r\n";
 		}
-		out += " \n Demand:\n\n";
+		out += " \r\n Demand:\r\n\r\n";
 		for (int i = 0; i < starting_skill_demand.length; i++) {
-			out = out +"  "+skills[i]+"\t: "+starting_skill_demand[i]+"\n";
+			out = out +"  "+skills[i]+"\t: "+starting_skill_demand[i]+"\r\n";
 		}
 		boolean schoolmissing = false;
 		for (int i = 0; i < classrooms.length; i++) {
@@ -145,7 +151,7 @@ public class PairingSystem {
 		}
 
 		if(schoolmissing){	
-			out += "\n\nThe following schools are missing a set of requested skills"+":\n\n";
+			out += "\r\n\r\nThe following schools are missing a set of requested skills"+":\r\n\r\n";
 			for (int i = 0; i < classrooms.length; i++) {
 				int [] missing = new int [number_skills];
 				boolean full = true;
@@ -155,12 +161,12 @@ public class PairingSystem {
 						full = false;
 
 						if(!full){
-							out = out + "  "+class_names[i]+"\n";
+							out = out + "  "+class_names[i]+"\r\n";
 							for (int j2 = 0; j2 < missing.length; j2++) {
 								if(missing[j2]>0)
-									out = out +"\t"+skills[j2]+"\t: "+missing[j2]+"\n";
+									out = out +"\t"+skills[j2]+"\t: "+missing[j2]+"\r\n";
 							}
-							out = out + "\n";
+							out = out + "\r\n";
 						}
 					}
 				}
@@ -172,21 +178,20 @@ public class PairingSystem {
 		int number_of_unsed = 0 ;
 		for (int i = 0; i < volunteers.length; i++) {
 			if(volunteers[i].getClassid()==-1){
-				vol = vol + "\n\t volunteers Id"+i+"\n";
+				vol = vol + "\r\n\t volunteers Id"+i+"\r\n";
 				number_of_unsed++;
 			}
 		}
 		if (number_of_unsed == 0)
-			out = out + "\nAll volunteers were allocated\n"+vol;
+			out = out + "\r\nAll volunteers were allocated\r\n"+vol;
 		else if (number_of_unsed == 1)
-			out = out + "\n" + vol + " is the only unallocated volunteer\n";
+			out = out + "\r\n" + vol + " is the only unallocated volunteer\r\n";
 		else
-			out = out + "\nThere are "+number_of_unsed+" unallocated volunteers:\n"+vol;
+			out = out + "\r\nThere are "+number_of_unsed+" unallocated volunteers:\r\n"+vol;
 
 		return out;
 	}
 
-	//XSSF
 	@SuppressWarnings("deprecation")
 	public static void makeStyles (Workbook newWorkbook){
 		styles = new CellStyle [number_classrooms];
@@ -430,31 +435,31 @@ public class PairingSystem {
 
 		Cell cell = workbook.getSheetAt(0).getRow(1).getCell(0);
 		number_skills 	  = Read_int(cell,workbook.getSheetName(0),1,0,false,-1);
-		log += "number_skills     set to "+number_skills+" \n";
+		log += "number_skills     set to "+number_skills+" \r\n";
 		if(number_skills<1){
 			throw new Exception("number_skills was set to "+number_skills);
 		}
 
 		cell = workbook.getSheetAt(0).getRow(3).getCell(0);
 		number_classrooms = Read_int(cell,workbook.getSheetName(0),3,0,false,-1);
-		log += "number_classrooms set to "+number_classrooms+" \n";
+		log += "number_classrooms set to "+number_classrooms+" \r\n";
 		if(number_classrooms<1){
 			throw new Exception("number_classrooms was set to "+number_classrooms);
 		}
 
 		cell = workbook.getSheetAt(0).getRow(5).getCell(0);
 		number_volunteers = Read_int(cell,workbook.getSheetName(0),5,0,false,-1);
-		log += "number_volunteers set to "+number_volunteers+" \n";
+		log += "number_volunteers set to "+number_volunteers+" \r\n";
 		if(number_volunteers<1){
 			throw new Exception("number_volunteers was set to "+number_volunteers);
 		}
 
-		log += "\nSkill names are :\n";
+		log += "\r\nSkill names are :\r\n";
 		skills = new String [number_skills];
 		for (int i = 0; i < number_skills; i++) {
 			cell = workbook.getSheetAt(0).getRow(1).getCell(1+i);
 			skills[i] = Read_String(cell,workbook.getSheetName(0),1,1+i);
-			log += "\t\""+skills[i]+"\"\n";
+			log += "\t\""+skills[i]+"\"\r\n";
 		}
 
 		for (int i = 0; i < number_skills; i++) {
@@ -466,7 +471,7 @@ public class PairingSystem {
 				}
 			}
 		}
-		log += "\n";
+		log += "\r\n";
 	}
 	private static void 	Read_class_list			(Workbook workbook) throws Exception {
 		classrooms = new Class  [number_classrooms];
@@ -496,11 +501,21 @@ public class PairingSystem {
 			}
 		}
 	}
+	@SuppressWarnings("deprecation")
 	private static void 	Read_class_heading		(Sheet sheet , String sheet_name ,String sheet2_name) throws Exception {
 		Row row = sheet.getRow(0);
 		int i = 0;
 		while (row.getCell(i)!=null){
-			i++;
+			if(row.getCell(i).getCellType()==Cell.CELL_TYPE_STRING){
+				if(row.getCell(i).getStringCellValue().compareTo("")!=0){
+				i++;
+				}else{
+					break;
+				}
+			}else{
+				break;
+			}
+			
 		}
 		class_headings = new String [i];
 		for (int j = 0; j < class_headings.length; j++) {
@@ -700,7 +715,7 @@ public class PairingSystem {
 		int [] skill_demand = new int [number_skills];
 		for (int i = 0; i < classrooms.length; i++) {
 			for (int j = 0; j < number_skills; j++) {
-				skill_demand[j] += classrooms[i].getCurrent_skills(j);
+				skill_demand[j] += classrooms[i].getRequested_skills(j);
 				skill_demand[j] -= classrooms[i].getCompromised_skills(j);
 				if(skill_demand[j]<0){
 					skill_demand[j]=0;
@@ -901,7 +916,7 @@ public class PairingSystem {
 		File f = new File (s);
 		try {
 			PrintWriter pw = new PrintWriter(f);
-			pw.write(log+"\n\n\n\n");
+			pw.write(log+"\r\n\r\n");
 			e.printStackTrace(pw);
 			pw.close();
 		} catch (FileNotFoundException ep) {

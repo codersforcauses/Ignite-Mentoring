@@ -504,8 +504,10 @@ public class Ignite extends Application
 		//Start Button the runs the algorithm and opens the output screen when done
 		startButton.setOnAction((ActionEvent e) -> 
 		{
+			String check = Direc.getText().substring(Direc.getText().length()-5, Direc.getText().length());
+			//System.out.println(Direc.getText() + "   " + check);
 			File f = new File(Direc.getText());
-			if(!Direc.getText().contains(".xls"))
+			if(!check.contains(".xls"))
 			{
 				startButton.setDisable(true);
 				errorBox("Selected file is not an excel file", "Error: Ignite Mentoring");
